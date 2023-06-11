@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  border: none;
+  background: none;
+  text-align: center;
+}
+
+.main-img img,
+.imgs img {
+  width: 10%;
+  margin: 0;
+  padding: 0;
+}
+
+.imgs {
+  grid-template-columns: repeat(20, 1fr);
+  grid-gap: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.main-img img {
+  border-top: #fff solid 3px;
+  margin-bottom: 30px;
+}
+
+/* Fade-in animation  */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in 1 forwards;
+}

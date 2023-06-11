@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>전대여🖖 이벤트</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    .ball {
+      display: inline-block;
+      border: 1px solid black;
+      border-radius: 40px;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background-color: white;
+      margin-left: 10px;
+    }
+
+    #in_lotto {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    #in_lotto h3,
+    #result h3 {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    #in_lotto input {
+      width: 50px;
+      height: 50px;
+      font-size: large;
+      text-align: center;
+    }
+
+    #done {
+      width: 150px;
+      height: 60px;
+      border: #ff85a1ff 3px solid;
+      border-radius: 10px;
+      background-color: white;
+      font-size: large;
+      margin-bottom: 60px;
+    }
+
+    #done:hover {
+      background-color: #f3e9ea;
+      border: rgb(210, 104, 128) 3px solid;
+      border-radius: 10px;
+    }
+
+    #result {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="mt-4 yo"><a href="index.html">전대여🖖</a></h1>
+    <nav class="headline">
+      <button>
+        <a href="login.html">로그인🔐</a>
+      </button>
+      <button>
+        <a href="signup.html">회원가입✍️</a>
+      </button>
+    </nav>
+  </div>
+  <nav class="header">
+    <ul>
+      <li class="nav_bar"><a href="location.html">위치</a></li>
+      <li class="nav_bar"><a href="rent.html">대여하기</a></li>
+      <li class="nav_bar"><a href="return.html">반납/연장하기</a></li>
+      <li class="nav_bar"><a href="maker.html">예쁜🐶👣📏들</a></li>
+      <li class="nav_bar"><a href="lotto.html">이벤트</a></li>
+    </ul>
+  </nav>
+
+  <div id="in_lotto">
+    <h3>번호를 선택하세요!</h3>
+    <div>
+      <input id="lotto_1" type="number" name="user_number" min="1" max="45" />
+      <input id="lotto_2" type="number" name="user_number" min="1" max="45" />
+      <input id="lotto_3" type="number" name="user_number" min="1" max="45" />
+      <input id="lotto_4" type="number" name="user_number" min="1" max="45" />
+      <input id="lotto_5" type="number" name="user_number" min="1" max="45" />
+      <input id="lotto_6" type="number" name="user_number" min="1" max="45" />
+    </div>
+    <br />
+    <button id="done">완료</button>
+  </div>
+  <br />
+  <div id="result">
+    <h3>추첨 결과는?</h3>
+  </div>
+  <script>
+    const $done = document.querySelector('#done')
+    $done.addEventListener('click', start)
+    var start = false
+
+    function start() {
+      if (start == true) {
+        alert('이미 버튼을 누르셨습니다.')
+        return
+      }
+      start = true
+      const candidate = Array(45)
+        .fill()
+        .map((v, i) => i + 1)
+      const shuffle = []
+      for (let i = candidate.length; i > 0; i--) {
+        const random = Math.floor(Math.random() * i)
+        const spliceArray = candidate.splice(random, 1)
+        const value = spliceArray[0]
+        shuffle.push(value)
+      }
+      const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b)
+      const $result = document.querySelector('#result')
+
+      function drawBall(number, $parent) {
+        const $ball = document.createElement('span')
+        $ball.className = 'ball'
+        $ball.textContent = number
+        $parent.appendChild($ball)
+      }
+
+      for (let i = 0; i < winBalls.length - 1; i++) {
+        setTimeout(() => {
+          drawBall(winBalls[i], $result)
+          $result.innerHTML += ', '
+        }, 1000 * i + 1)
+      }
+
+      setTimeout(() => {
+        drawBall(winBalls[5], $result)
+      }, 5000)
+
+      const $lotto_btn = document.querySelectorAll('.lotto_btn')
+      const lotto_value = $lotto_btn.value
+
+      function Prize() {
+        const $lotto_n1 = document.querySelector('#lotto_1')
+        const $lotto_n2 = document.querySelector('#lotto_2')
+        const $lotto_n3 = document.querySelector('#lotto_3')
+        const $lotto_n4 = document.querySelector('#lotto_4')
+        const $lotto_n5 = document.querySelector('#lotto_5')
+        const $lotto_n6 = document.querySelector('#lotto_6')
+
+        const lotto_val = [
+          parseInt($lotto_n1.value),
+          parseInt($lotto_n2.value),
+          parseInt($lotto_n3.value),
+          parseInt($lotto_n4.value),
+          parseInt($lotto_n5.value),
+          parseInt($lotto_n6.value),
+        ]
+
+        const lotto_value = lotto_val.sort((a, b) => a - b)
+
+        const Same = lotto_value.every(
+          (number, index) => number === winBalls[index]
+        )
+        if (Same) {
+          alert('축하드립니다. 무료 대여 2시간권에 당첨되셨습니다!')
+        } else {
+          alert('꽝이에요. 무료 대여권은 다음 기회에🖖')
+        }
+      }
+      setTimeout(() => {
+        Prize()
+      }, 5500)
+    }
+  </script>
+</body>
